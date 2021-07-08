@@ -31,7 +31,6 @@ class SpotifyUtils:
             except:
                 continue
 
-        print(d)
         artist_and_name = [key + ' ' + d[key] for key in d.keys()]
         return artist_and_name
 
