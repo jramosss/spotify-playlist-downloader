@@ -108,3 +108,12 @@ dist
 *.webm
 aux.py
 __pycache__/
+bin/
+etc/
+lib/
+lib64/
+output/
+share/
+include/
+pyvenv.cfg
+.cache

@@ -6,7 +6,8 @@ This program downloads all songs from a specified playlist.
 ---
 
 ## Setup:
-* First of all: `pip install requirements.txt`
+* Optional but recommended: setup a virtual enviroment with `python3 -m venv path/to/repo ; source bin/activate`
+* $ `pip install -r requirements.txt`
 * Later, set the enviroment variables *SPOTIPY_CLIENT_ID* and *SPOTIPY_CLIENT_SECRET* which you can get [*here*](https://developer.spotify.com/dashboard/login)
 * All set!
 
@@ -17,7 +18,8 @@ Run the main file with python main.py, then, enter a playlist URL and the progra
 
 * **-n or --nresults**:  
 Lets you decide how many videos you want to fetch (default 5) and you can set it with python3 main.py --nresults=10.   
-Why would i want to do that? The answer is just below you.
+Why would i want to do that? The answer is just below you.   
+This flag wont do anything if the flag --pick isnt set.
 
 * **-p or --pick**:  
 What if i dont want the program to decide which song to download? I want to do it!, well you can do it because im an awesome programmer.
