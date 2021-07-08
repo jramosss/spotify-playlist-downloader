@@ -3,6 +3,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from os import environ
 from dotenv import load_dotenv
 import spotify_uri
+from re import search
 
 load_dotenv('./.env')
 
@@ -37,3 +38,7 @@ class SpotifyUtils:
     def getTrackNamesFromPlaylist(self, url):
         res = spotify.playlist_tracks(self.URLToURI(url))
         return self.track_artist_and_names(res)
+
+    def is_playlist(self, link):
+        SP_PL_REGEX = "^(spotify:|https://[a-z]+\.spotify\.com/+playlist)"
+        return search(SP_PL_REGEX, link)

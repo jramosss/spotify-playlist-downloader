@@ -3,6 +3,7 @@ from spotify import SpotifyUtils
 from youtube import YoutubeUtils
 from os import system, listdir
 from os.path import isdir
+from sys import exit
 
 
 def move_to_path(path='songs'):
@@ -10,6 +11,7 @@ def move_to_path(path='songs'):
         system('mkdir ' + path)
     FILES = listdir('.')
     songs = []
+    # TODO, check the file is not in songs/
     for file in FILES:
         if (file.__contains__('.mp3')):
             songs.append(file)
@@ -23,7 +25,10 @@ if __name__ == '__main__':
     sp = SpotifyUtils()
     yt = YoutubeUtils()
     PLAYLIST_URL = input("Playlist URL: ").strip()
-    # TODO usea a regex
+    if (not sp.is_playlist(PLAYLIST_URL)):
+        print("Not a valid spotify playlist")
+        exit(1)
+
     # TODO make the folder name after the playlist name
     songs_names = sp.getTrackNamesFromPlaylist(PLAYLIST_URL)
     songs_yt_links = []
