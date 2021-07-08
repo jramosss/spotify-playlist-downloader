@@ -42,3 +42,7 @@ class SpotifyUtils:
     def is_playlist(self, link):
         SP_PL_REGEX = "^(spotify:|https://[a-z]+\.spotify\.com/+playlist)"
         return search(SP_PL_REGEX, link)
+
+    def get_playlist_name(self, url):
+        res = spotify.playlist(self.URLToURI(url))
+        return res['name']

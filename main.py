@@ -7,12 +7,12 @@ from sys import exit
 from platform import system as psystem
 
 
-def move_to_path(path='songs'):
+def move_to_path(path='./songs'):
     if (not isdir(path)):
         system('mkdir ' + path)
     FILES = listdir('.')
     songs = []
-    # TODO, check the file is not in songs/
+
     for file in FILES:
         if (file.__contains__('.mp3')):
             songs.append(file)
@@ -24,7 +24,7 @@ def move_to_path(path='songs'):
             system('move ' + "'" + song + "' " + path)
 
 
-if __name__ == '__main__':
+def main():
     sp = SpotifyUtils()
     yt = YoutubeUtils()
     PLAYLIST_URL = input("Playlist URL: ").strip()
@@ -37,6 +37,10 @@ if __name__ == '__main__':
     songs_yt_links = []
     for name in songs_names:
         songs_yt_links.append(yt.find_video_URL_by_name(name).strip())
-    # print(songs_yt_links)
+
     yt.download_videos(songs_yt_links)
-    move_to_path()
+    move_to_path(sp.get_playlist_name(PLAYLIST_URL))
+
+
+if __name__ == '__main__':
+    main()
