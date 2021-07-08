@@ -33,5 +33,3 @@ class SpotifyUtils:
     def getTrackNamesFromPlaylist(self, url):
         res = spotify.playlist_tracks(self.URLToURI(url))
         return self.track_artist_and_names(res)
-
-    # TODO now parse from youtube the videos using ytdl

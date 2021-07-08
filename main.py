@@ -22,8 +22,8 @@ def move_to_path(path='songs'):
 if __name__ == '__main__':
     sp = SpotifyUtils()
     yt = YoutubeUtils()
-    #PLAYLIST_URL = input("Playlist URL: ").strip()
-    PLAYLIST_URL = 'https://open.spotify.com/playlist/2pcrXwzjOApXI5QYHifhqm?si=9ca361db2ceb47f6'
+    PLAYLIST_URL = input("Playlist URL: ").strip()
+    # TODO make the folder name after the playlist name
     URI = sp.URLToURI(PLAYLIST_URL)
     songs_names = sp.getTrackNamesFromPlaylist(URI)
     songs_yt_links = []
