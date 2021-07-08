@@ -4,6 +4,7 @@ from youtube import YoutubeUtils
 from os import system, listdir
 from os.path import isdir
 from sys import exit
+from platform import system as psystem
 
 
 def move_to_path(path='songs'):
@@ -17,8 +18,10 @@ def move_to_path(path='songs'):
             songs.append(file)
 
     for song in songs:
-        command = 'mv ' + "'" + song + "' " + path
-        system(command)
+        if psystem() == 'Linux' or psystem() == 'MacOS':
+            system('mv ' + "'" + song + "' " + path)
+        elif psystem() == 'Windows':
+            system('move ' + "'" + song + "' " + path)
 
 
 if __name__ == '__main__':
