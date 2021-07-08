@@ -5,6 +5,7 @@ from os import system, listdir
 from os.path import isdir
 from sys import exit
 from platform import system as psystem
+from optparse import OptionParser
 
 
 def move_to_path(path='./songs'):
@@ -24,7 +25,7 @@ def move_to_path(path='./songs'):
             system('move ' + "'" + song + "' " + path)
 
 
-def main():
+def main(pick=False):
     sp = SpotifyUtils()
     yt = YoutubeUtils()
     PLAYLIST_URL = input("Playlist URL: ").strip()
@@ -32,15 +33,20 @@ def main():
         print("Not a valid spotify playlist")
         exit(1)
 
-    # TODO make the folder name after the playlist name
     songs_names = sp.getTrackNamesFromPlaylist(PLAYLIST_URL)
     songs_yt_links = []
     for name in songs_names:
-        songs_yt_links.append(yt.find_video_URL_by_name(name).strip())
+        songs_yt_links.append(yt.find_video_URL_by_name(name, pick).strip())
 
     yt.download_videos(songs_yt_links)
     move_to_path(sp.get_playlist_name(PLAYLIST_URL))
 
 
 if __name__ == '__main__':
-    main()
+    parser = OptionParser()
+    parser.add_option("-p", "--pick",
+                      help="If you want to pick which video to download for each song",
+                      default=False, action='store_true', dest='pick')
+    # https://open.spotify.com/playlist/6uwl0GNgjTluXnc5vRyYLE?si=f04a4626f9fa42bf
+    (options, args) = parser.parse_args()
+    main(options.pick)
