@@ -31,8 +31,8 @@ class YoutubeUtils:
             if i == chose:
                 return item['link']
 
-    def find_video_URL_by_name(self, name, pick=False):
-        videosSearch = VideosSearch(name, limit=5)
+    def find_video_URL_by_name(self, name, pick=False, nresults=5):
+        videosSearch = VideosSearch(name, limit=nresults)
         result = videosSearch.result()['result']
         if pick:
             return self.__picker(result)

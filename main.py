@@ -25,7 +25,7 @@ def move_to_path(path='./songs'):
             system('move ' + "'" + song + "' " + path)
 
 
-def main(pick=False, path=None):
+def main(pick=False, path=None, nresults=5):
     sp = SpotifyUtils()
     yt = YoutubeUtils()
     PLAYLIST_URL = input("Playlist URL: ").strip()
@@ -36,7 +36,8 @@ def main(pick=False, path=None):
     songs_names = sp.getTrackNamesFromPlaylist(PLAYLIST_URL)
     songs_yt_links = []
     for name in songs_names:
-        songs_yt_links.append(yt.find_video_URL_by_name(name, pick).strip())
+        songs_yt_links.append(yt.find_video_URL_by_name(
+            name, pick, nresults).strip())
 
     yt.download_videos(songs_yt_links)
     if path != None:
@@ -54,6 +55,10 @@ if __name__ == '__main__':
     parser.add_option("--path",
                       help="Choose where to download the songs",
                       action='store', type='string', dest='path', default=None)
+
+    parser.add_option("-n", "--nresults",
+                      help="Specify how many results you want to fetch",
+                      action='store', type='int', dest='nresults', default=5)
     # https://open.spotify.com/playlist/6uwl0GNgjTluXnc5vRyYLE?si=f04a4626f9fa42bf
     (options, args) = parser.parse_args()
-    main(options.pick, options.path)
+    main(options.pick, options.path, options.nresults)
