@@ -167,6 +167,8 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+*.mp3
+*.webm
 
 # Cython debug symbols
 cython_debug/
