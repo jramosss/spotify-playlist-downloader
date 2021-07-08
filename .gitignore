@@ -169,6 +169,7 @@ dmypy.json
 .pytype/
 *.mp3
 *.webm
+aux.py
 
 # Cython debug symbols
 cython_debug/

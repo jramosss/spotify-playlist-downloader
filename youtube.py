@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import youtube_dl as ytdl
 from youtubesearchpython import VideosSearch
-from os import system
 
 
 class YoutubeUtils:
@@ -17,9 +16,11 @@ class YoutubeUtils:
             if (self.isChosen(item['title'])):
                 return item['link']
         # If there`s no chosen one, choose the second
-        return item[1]['link']
+        for i, item in enumerate(result):
+            if (i == 1):
+                return item['link']
 
-    def download_video(self, urls, path='./songs'):
+    def download_videos(self, urls):
         ydl_opts = {
             'format': 'bestaudio/best',
             'postprocessors': [{
@@ -30,4 +31,4 @@ class YoutubeUtils:
         }
 
         with ytdl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([urls])
+            ydl.download(urls)
