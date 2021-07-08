@@ -22,11 +22,16 @@ class SpotifyUtils:
         d = dict()
         artist_and_name = []
         for i, item in enumerate(results['items']):
-            track = item['track']
-            # print("   %d %32.32s %s" %
-            #      (i, track['artists'][0]['name'], track['name']))
-            d[track['artists'][0]['name']] = track['name']
+            try:
+                track = item['track']
+                artist = track['artists'][0]['name']
+                song_name = track['name']
+                if artist != None and artist != '' and song_name != None and song_name != '':
+                    d[artist] = song_name
+            except:
+                continue
 
+        print(d)
         artist_and_name = [key + ' ' + d[key] for key in d.keys()]
         return artist_and_name
 

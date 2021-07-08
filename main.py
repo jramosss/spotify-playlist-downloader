@@ -23,9 +23,9 @@ if __name__ == '__main__':
     sp = SpotifyUtils()
     yt = YoutubeUtils()
     PLAYLIST_URL = input("Playlist URL: ").strip()
+    # TODO usea a regex
     # TODO make the folder name after the playlist name
-    URI = sp.URLToURI(PLAYLIST_URL)
-    songs_names = sp.getTrackNamesFromPlaylist(URI)
+    songs_names = sp.getTrackNamesFromPlaylist(PLAYLIST_URL)
     songs_yt_links = []
     for name in songs_names:
         songs_yt_links.append(yt.find_video_URL_by_name(name).strip())
