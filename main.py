@@ -53,7 +53,8 @@ def main(pick=False, path=None, nresults=5):
 
     yt.download_videos(songs_yt_links)
     if path != None:
-        move_to_path(path)
+        if path != '.':
+            move_to_path(path)
     else:
         move_to_path(sp.get_playlist_name(PLAYLIST_URL))
 
