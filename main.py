@@ -39,7 +39,7 @@ def main(pick=False, path=None, nresults=5):
         pick = _pick == 'y'
         _nresults = input("How much results do you want to fetch? (default 5) (If you dont know what this means leave it blank): ")
         if _nresults != '':
-            nresults = _nresults
+            nresults = int(_nresults)
 
     if not sp.is_playlist(PLAYLIST_URL):
         print("Not a valid spotify playlist")
