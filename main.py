@@ -1,5 +1,5 @@
-from spotify import SpotifyUtils
-from youtube import YoutubeUtils
+from classes.spotify import SpotifyUtils
+from classes.youtube import YoutubeUtils
 from os import system, listdir
 from os.path import isdir
 from platform import system as psystem
