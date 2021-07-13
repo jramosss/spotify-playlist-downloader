@@ -17,7 +17,7 @@ class YoutubeUtils:
 
         chose = 0
         while True:
-            print("Cual cancion desea descargar?: \n")
+            print("Which song do you want to download?: \n")
             # TODO print thumbnails
             pprint(titles)
             chose = int(

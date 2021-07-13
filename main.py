@@ -28,7 +28,18 @@ def main(pick=False, path=None, nresults=5):
     sp = SpotifyUtils()
     yt = YoutubeUtils()
     PLAYLIST_URL = input("Playlist URL: ").strip()
-    if (not sp.is_playlist(PLAYLIST_URL)):
+    if psystem() == 'Windows':
+        _path = input("Specify a path (leave it blank for default): ")
+        if _path == '' or _path == "" or _path == " " or _path == ' ':
+            path = _path
+        _pick = input("Do you want to pick which song to download? <y/n>: ")
+        pick = _pick == 'y'
+        _nresults = input(
+            "How much results do you want to fetch? (default 5) (If you dont know what this means leave it blank): ")
+        if _nresults != '':
+            nresults = int(_nresults)
+
+    if not sp.is_playlist(PLAYLIST_URL):
         print("Not a valid spotify playlist")
         main()
 
@@ -40,7 +51,8 @@ def main(pick=False, path=None, nresults=5):
 
     yt.download_videos(songs_yt_links)
     if path != None:
-        move_to_path(path)
+        if path != '.':
+            move_to_path(path)
     else:
         move_to_path(sp.get_playlist_name(PLAYLIST_URL))
 
