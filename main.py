@@ -1,9 +1,7 @@
-from genericpath import isdir
 from spotify import SpotifyUtils
 from youtube import YoutubeUtils
 from os import system, listdir
 from os.path import isdir
-from sys import exit
 from platform import system as psystem
 from optparse import OptionParser
 
@@ -18,10 +16,11 @@ def move_to_path(path='./songs'):
         if (file.__contains__('.mp3')):
             songs.append(file)
 
+    sys = psystem()
     for song in songs:
-        if psystem() == 'Linux' or psystem() == 'MacOS':
+        if sys == 'Linux' or sys == 'MacOS':
             system('mv ' + "'" + song + "' " + path)
-        elif psystem() == 'Windows':
+        elif sys == 'Windows':
             system('move ' + "'" + song + "' " + path)
 
 
@@ -31,7 +30,7 @@ def main(pick=False, path=None, nresults=5):
     PLAYLIST_URL = input("Playlist URL: ").strip()
     if (not sp.is_playlist(PLAYLIST_URL)):
         print("Not a valid spotify playlist")
-        exit(1)
+        main()
 
     songs_names = sp.getTrackNamesFromPlaylist(PLAYLIST_URL)
     songs_yt_links = []
@@ -44,6 +43,11 @@ def main(pick=False, path=None, nresults=5):
         move_to_path(path)
     else:
         move_to_path(sp.get_playlist_name(PLAYLIST_URL))
+
+    retry = input(
+        "Press y to download another playlist, press any other key to exit: ")
+    if retry == 'y':
+        main()
 
 
 if __name__ == '__main__':

@@ -4,8 +4,11 @@ from os import environ
 from dotenv import load_dotenv
 import spotify_uri
 from re import search
+from os import listdir
 
-load_dotenv('./.env')
+FILES = listdir('.')
+if '.env' in FILES:
+    load_dotenv('./.env')
 
 CLIENT_ID = environ["SPOTIPY_CLIENT_ID"]
 CLIENT_SECRET = environ["SPOTIPY_CLIENT_SECRET"]

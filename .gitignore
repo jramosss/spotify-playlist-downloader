@@ -117,3 +117,6 @@ share/
 include/
 pyvenv.cfg
 .cache
+*.exe
+main.spec
+build/
