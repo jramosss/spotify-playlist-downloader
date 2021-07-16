@@ -62,6 +62,7 @@ class YoutubeUtils:
                 'preferredquality': '192',
             }],
         }
+        failed = {}
         with ytdl.YoutubeDL(ydl_opts) as ydl:
             i = 1
             for name in names_and_urls.keys():
@@ -71,4 +72,9 @@ class YoutubeUtils:
                                    " " + str(i) + '/' + str(len(names_and_urls)))
                     i += 1
                 except Exception as e:
-                    print_in_red("ERROR: Failed to download " + name, " ", e)
+                    try:
+                        failed[name] = names_and_urls[name]
+                        print_in_red("ERROR: Failed to download " +
+                                     name, " " + str(e))
+                    except:
+                        pass
