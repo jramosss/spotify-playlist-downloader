@@ -63,7 +63,7 @@ def main(pick=False, path=None, nresults=5):
         if path != '.':
             move_to_path(path)
     else:
-        move_to_path()
+        move_to_path(PLAYLIST_NAME)
 
     retry = input(
         '\033[94m' + "Press y to download another playlist, press any other key to exit: ")

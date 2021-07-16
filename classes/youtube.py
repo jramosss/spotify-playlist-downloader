@@ -9,14 +9,17 @@ class YoutubeUtils:
 
     def isChosen(self, strr: str):
         strr = strr.lower()
-        banned_words = ['lyrics', 'letra', 'reaccion',
-                        'reaction', 'coreography', 'dance', 'bass boosted']
-        flag = True
+        wanted_words = ['lyrics', 'letra']
+        banned_words = ['reaccion',
+                        'reaction', 'coreography', 'dance', 'bass boosted',
+                        'choreography', 'official video', 'video oficial', '1 hora', '10 horas']
+        for word in wanted_words:
+            if strr.__contains__(word):
+                return True
         for word in banned_words:
             if strr.__contains__(word):
-                flag = False
-
-        return flag
+                return False
+        return True
 
     def __picker(self, result):
         titles = dict()
@@ -73,6 +76,7 @@ class YoutubeUtils:
                     i += 1
                 except Exception as e:
                     try:
+                        # TODO do something with this
                         failed[name] = names_and_urls[name]
                         print_in_red("ERROR: Failed to download " +
                                      name, " " + str(e))
