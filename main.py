@@ -1,27 +1,31 @@
 from classes.spotify import SpotifyUtils
 from classes.youtube import YoutubeUtils
-from os import system, listdir
+from os import system
 from os.path import isdir
 from platform import system as psystem
 from optparse import OptionParser
 
+# https://open.spotify.com/playlist/7vmhdvmFLeEs6gNoUg1dmF?si=c29e021775164965 2 songs
+# https://open.spotify.com/playlist/78tw7XfmsRyQNMf3iFiDy6?si=ddce76760c8b4cc8 23 songs
+# https://open.spotify.com/playlist/37i9dQZEVXbMMy2roB9myp?si=cc2a8fca549048a0 50 songs
+# https://open.spotify.com/playlist/4kYzJUyyotahj7jNHLjVn3?si=9c2176a7d1f54020 +2000 songs
 
-def move_to_path(path='./songs'):
+
+def move_to_path(path: str = './songs'):
+    path = path.strip()
+    path = path.replace(' ', '_')
+    print("path: ", path)
     if (not isdir(path)):
         system('mkdir ' + path)
-    FILES = listdir('.')
-    songs = []
-
-    for file in FILES:
-        if (file.__contains__('.mp3')):
-            songs.append(file)
-
     sys = psystem()
-    for song in songs:
-        if sys == 'Linux' or sys == 'MacOS':
-            system('mv ' + "'" + song + "' " + path)
-        elif sys == 'Windows':
-            system('move ' + "'" + song + "' " + path)
+    if sys == 'Linux' or sys == 'macOS':
+        system('mv *.mp3 ' + path)
+    elif sys == 'Windows':
+        system('move *.mp3 ' + path)
+    else:
+        print('\033[91m' +
+              "ERROR: Not recognized OS " + sys + ",files will stay in this folder")
+        print('\033[39m')
 
 
 def main(pick=False, path=None, nresults=5):
@@ -43,21 +47,28 @@ def main(pick=False, path=None, nresults=5):
         print("Not a valid spotify playlist")
         main()
 
+    print('\033[92m' + "Getting song names...")
+    print('\033[39m')
     songs_names = sp.getTrackNamesFromPlaylist(PLAYLIST_URL)
-    songs_yt_links = []
+    songs_yt_names_and_links = {}
     for name in songs_names:
-        songs_yt_links.append(yt.find_video_URL_by_name(
+        songs_yt_names_and_links[name] = (yt.find_video_URL_by_name(
             name, pick, nresults).strip())
 
-    yt.download_videos(songs_yt_links)
+    print('\033[92m' + "Downloading songs...")
+    print('\033[39m')
+    yt.download_videos(songs_yt_names_and_links)
     if path != None:
+        print('\033[92m' + "Moving songs to " + path)
+        print('\033[39m')
         if path != '.':
             move_to_path(path)
     else:
         move_to_path(sp.get_playlist_name(PLAYLIST_URL))
 
     retry = input(
-        "Press y to download another playlist, press any other key to exit: ")
+        '\033[94m' + "Press y to download another playlist, press any other key to exit: ")
+    print('\033[39m')
     if retry == 'y':
         main()
 
