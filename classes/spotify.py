@@ -1,3 +1,4 @@
+from utils.utils import print_in_red
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from os import environ
@@ -23,19 +24,17 @@ class SpotifyUtils:
         return spotify_uri.formatURI(url)
 
     def track_artist_and_names(self, results):
-        d = dict()
         artist_and_name = []
-        for i, item in enumerate(results['items']):
+        for item in results['items']:
             try:
                 track = item['track']
                 artist = track['artists'][0]['name']
                 song_name = track['name']
                 if artist != None and artist != '' and song_name != None and song_name != '':
-                    d[artist] = song_name
-            except:
-                continue
+                    artist_and_name.append(artist + ' ' + song_name)
+            except Exception as e:
+                print_in_red("Failed to get song name: ", e)
 
-        artist_and_name = [key + ' ' + d[key] for key in d.keys()]
         return artist_and_name
 
     def getTrackNamesFromPlaylist(self, url):
